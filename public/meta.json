@@ -1,0 +1,16 @@
+{
+  "project": "Krung Thep Blackspots",
+  "raw_file": "data/raw/accident2025.csv",
+  "records_after_cleaning": 4065,
+  "hotspot_count": 81,
+  "focus_provinces": [
+    "กรุงเทพมหานคร",
+    "นนทบุรี",
+    "ปทุมธานี",
+    "สมุทรปราการ"
+  ],
+  "cluster_method": "DBSCAN with haversine distance",
+  "eps_meters": 750,
+  "min_samples": 4,
+  "area_score_type": "road"
+}
