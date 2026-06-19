@@ -860,21 +860,21 @@
     "safety_score":99.6
   },
   {
-    "area_name":"ทางเข้าท่าอากาศยานสุวรรณภูมิด้านถนนบางนา - บางวัว",
-    "accidents":2,
-    "severity_sum":6.1,
-    "deaths":0,
-    "injuries":2,
-    "clusters":1,
-    "risk_index":11.62,
-    "safety_score":99.6
-  },
-  {
     "area_name":"จุดเชื่อมต่อถนนวงแหวนอุตสาหกรรมเข้าสะพานภูมิพลที่ 2",
     "accidents":2,
     "severity_sum":6.1,
     "deaths":1,
     "injuries":0,
+    "clusters":1,
+    "risk_index":11.62,
+    "safety_score":99.6
+  },
+  {
+    "area_name":"ทางเข้าท่าอากาศยานสุวรรณภูมิด้านถนนบางนา - บางวัว",
+    "accidents":2,
+    "severity_sum":6.1,
+    "deaths":0,
+    "injuries":2,
     "clusters":1,
     "risk_index":11.62,
     "safety_score":99.6
@@ -950,7 +950,7 @@
     "safety_score":99.7
   },
   {
-    "area_name":"สะพานพระราม 3",
+    "area_name":"แยกทางหลวงหมายเลข 305 (กม.ที่ 26+400) - บ้านแสนสุขสกัดห้า",
     "accidents":1,
     "severity_sum":5.9,
     "deaths":1,
@@ -970,7 +970,7 @@
     "safety_score":99.7
   },
   {
-    "area_name":"แยกทางหลวงหมายเลข 305 (กม.ที่ 26+400) - บ้านแสนสุขสกัดห้า",
+    "area_name":"สะพานพระราม 3",
     "accidents":1,
     "severity_sum":5.9,
     "deaths":1,
