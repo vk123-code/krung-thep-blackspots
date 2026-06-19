@@ -216,6 +216,11 @@ h1 span {
 }
 
 .button.ghost {
+  .button.notebook {
+  color: var(--ink);
+  background: var(--mint);
+  border-color: var(--mint);
+}
   color: var(--cream);
   background: transparent;
   border-style: dashed;

@@ -5,6 +5,10 @@ import "./App.css";
 
 const DEFAULT_CENTER = [13.7563, 100.5018];
 
+// Replace this with your real Colab share link.
+// Example: "https://colab.research.google.com/drive/..."
+const COLAB_NOTEBOOK_URL = "https://colab.research.google.com/drive/1DUnQDASFlP2aQ_uugP9AC0HETku7akdX?usp=sharing";
+
 function fmt(value) {
   if (value === null || value === undefined || value === "") return "Unknown";
   return value;
@@ -87,9 +91,11 @@ export default function App() {
     if (!features.length) return DEFAULT_CENTER;
 
     const sample = features.slice(0, 100);
+
     const lat =
       sample.reduce((sum, feature) => sum + feature.geometry.coordinates[1], 0) /
       sample.length;
+
     const lon =
       sample.reduce((sum, feature) => sum + feature.geometry.coordinates[0], 0) /
       sample.length;
@@ -155,7 +161,9 @@ export default function App() {
   }
 
   const totalAccidents = features.length;
+
   const hotspotCount = hotspots.length;
+
   const severeCount = features.filter(
     (feature) => Number(feature.properties.severity || 0) >= 8
   ).length;
@@ -169,6 +177,7 @@ export default function App() {
       <nav className="topNav">
         <div className="brandCluster">
           <div className="brandGlyph">กท</div>
+
           <div>
             <strong>Krung Thep Blackspots</strong>
             <span>Road accident intelligence</span>
@@ -178,8 +187,13 @@ export default function App() {
         <div className="navLinks">
           <a href="#map">Map</a>
           <a href="#scores">Scores</a>
+
           <a href="/krungthep_blackspots_cleaned.csv" download>
             Data
+          </a>
+
+          <a href={COLAB_NOTEBOOK_URL} target="_blank" rel="noreferrer">
+            Colab
           </a>
         </div>
       </nav>
@@ -208,6 +222,15 @@ export default function App() {
               Download cleaned CSV
             </a>
 
+            <a
+              className="button notebook"
+              href={COLAB_NOTEBOOK_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Colab pipeline
+            </a>
+
             <label className="button ghost">
               Upload GeoJSON
               <input type="file" accept=".json,.geojson" onChange={handleUpload} />
@@ -219,10 +242,12 @@ export default function App() {
               <span>Method</span>
               <strong>DBSCAN</strong>
             </div>
+
             <div>
               <span>Distance</span>
               <strong>Haversine</strong>
             </div>
+
             <div>
               <span>Output</span>
               <strong>GeoJSON</strong>
@@ -274,7 +299,9 @@ export default function App() {
       {loadError && (
         <section className="errorBox">
           <strong>Data not loaded yet.</strong>
+
           <p>{loadError}</p>
+
           <p>
             Run <code>python scripts/clean_accidents.py</code>, then refresh the page.
           </p>
@@ -306,6 +333,7 @@ export default function App() {
       <section className="controlStudio">
         <div className="controlBlock wide">
           <label>Search road, province, cause, or weather</label>
+
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -315,6 +343,7 @@ export default function App() {
 
         <div className="controlBlock">
           <label>Minimum severity</label>
+
           <input
             type="range"
             min="0"
@@ -322,6 +351,7 @@ export default function App() {
             value={minimumSeverity}
             onChange={(event) => setMinimumSeverity(event.target.value)}
           />
+
           <b>{minimumSeverity}</b>
         </div>
 
@@ -331,6 +361,7 @@ export default function App() {
             checked={hotspotsOnly}
             onChange={(event) => setHotspotsOnly(event.target.checked)}
           />
+
           <span>Hotspot points only</span>
         </label>
       </section>
@@ -438,8 +469,11 @@ export default function App() {
             {scoreResult ? (
               <div className="scoreCard">
                 <span>{scoreResult.area_name}</span>
+
                 <strong>{scoreResult.safety_score}</strong>
+
                 <p>{scoreLabel(Number(scoreResult.safety_score))}</p>
+
                 <small>
                   {scoreResult.accidents} accidents · risk index{" "}
                   {Number(scoreResult.risk_index).toFixed(1)}
@@ -478,6 +512,7 @@ export default function App() {
             <p className="miniLabel">Model card</p>
 
             <ul>
+              <li>Google Colab data science notebook</li>
               <li>Python cleaning pipeline</li>
               <li>Severity-weighted risk index</li>
               <li>DBSCAN hotspot clustering</li>
