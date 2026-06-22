@@ -201,15 +201,12 @@ export default function App() {
   }
 
   const totalAccidents = features.length;
-
   const hotspotCount = hotspots.length;
-
   const severeCount = features.filter(
     (feature) => Number(feature.properties.severity || 0) >= 8
   ).length;
 
   const topHotspot = hotspots[0];
-  const topHotspotRoad = topHotspot?.top_road ? fmt(topHotspot.top_road) : "Awaiting model";
 
   return (
     <main className="siteShell">
@@ -228,11 +225,9 @@ export default function App() {
         <div className="navLinks">
           <a href="#map">Map</a>
           <a href="#scores">Scores</a>
-
           <a href="/krungthep_blackspots_cleaned.csv" download>
             Data
           </a>
-
           <a href={COLAB_NOTEBOOK_URL} target="_blank" rel="noreferrer">
             Colab
           </a>
@@ -296,7 +291,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="heroArtwork" aria-label="Road accident hotspot board">
+        <div className="heroArtwork" aria-label="Minimal accident hotspot board">
           <div className="riskBoard">
             <div className="boardTop">
               <span />
@@ -304,16 +299,12 @@ export default function App() {
               <span />
             </div>
 
-            <div className="boardTitle">
-              <p>Bangkok Metro</p>
-              <strong>BLACKSPOT FIELD</strong>
-            </div>
+            <div className="boardBadge">Bangkok Metro</div>
 
             <div className="roadNetwork">
-              <div className="roadLine mainRoad" />
-              <div className="roadLine branchOne" />
-              <div className="roadLine branchTwo" />
-              <div className="roadLine branchThree" />
+              <div className="roadLine roadA" />
+              <div className="roadLine roadB" />
+              <div className="roadLine roadC" />
 
               <span className="dangerPin pinOne">
                 <b>1</b>
@@ -330,21 +321,17 @@ export default function App() {
               <span className="dangerPin pinFour">
                 <b>4</b>
               </span>
-
-              <span className="routeLabel labelOne">cluster density</span>
-              <span className="routeLabel labelTwo">severity index</span>
-              <span className="routeLabel labelThree">commute exposure</span>
             </div>
 
             <div className="riskReadout">
               <div>
-                <span>Highest cluster</span>
-                <strong>{topHotspot ? `#${topHotspot.rank}` : "..."}</strong>
+                <span>Mapped records</span>
+                <strong>{totalAccidents.toLocaleString()}</strong>
               </div>
 
               <div>
-                <span>Top road</span>
-                <strong>{topHotspotRoad}</strong>
+                <span>Highest cluster</span>
+                <strong>{topHotspot ? `#${topHotspot.rank}` : "..."}</strong>
               </div>
 
               <div>
@@ -353,25 +340,13 @@ export default function App() {
               </div>
             </div>
           </div>
-
-          <div className="floatingCard hot">
-            <span>Mapped records</span>
-            <strong>{totalAccidents.toLocaleString()}</strong>
-          </div>
-
-          <div className="floatingCard cold">
-            <span>Model layer</span>
-            <strong>DBSCAN</strong>
-          </div>
         </div>
       </section>
 
       {loadError && (
         <section className="errorBox">
           <strong>Data not loaded yet.</strong>
-
           <p>{loadError}</p>
-
           <p>
             Run <code>python scripts/clean_accidents.py</code>, then refresh the page.
           </p>
@@ -403,7 +378,6 @@ export default function App() {
       <section className="controlStudio">
         <div className="controlBlock wide">
           <label>Search road, province, cause, or weather</label>
-
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -413,7 +387,6 @@ export default function App() {
 
         <div className="controlBlock">
           <label>Minimum severity</label>
-
           <input
             type="range"
             min="0"
@@ -421,7 +394,6 @@ export default function App() {
             value={minimumSeverity}
             onChange={(event) => setMinimumSeverity(event.target.value)}
           />
-
           <b>{minimumSeverity}</b>
         </div>
 
@@ -431,7 +403,6 @@ export default function App() {
             checked={hotspotsOnly}
             onChange={(event) => setHotspotsOnly(event.target.checked)}
           />
-
           <span>Hotspot points only</span>
         </label>
       </section>
@@ -541,11 +512,8 @@ export default function App() {
             {scoreResult ? (
               <div className="scoreCard">
                 <span>{bilingualLabel(scoreResult.area_name)}</span>
-
                 <strong>{scoreResult.safety_score}</strong>
-
                 <p>{scoreLabel(Number(scoreResult.safety_score))}</p>
-
                 <small>
                   {scoreResult.accidents} accidents · risk index{" "}
                   {Number(scoreResult.risk_index).toFixed(1)}
