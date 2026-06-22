@@ -14,6 +14,10 @@
   --font-body: "Bricolage Grotesque", system-ui, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: var(--cream);
   background:
@@ -135,8 +139,8 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
   gap: 28px;
-  min-height: 680px;
-  align-items: stretch;
+  min-height: 720px;
+  align-items: center;
 }
 
 .heroCopy {
@@ -255,24 +259,24 @@ h1 span {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 640px;
+  min-height: 720px;
 }
 
 .riskBoard {
   position: relative;
-  width: min(100%, 720px);
-  aspect-ratio: 1.06 / 1;
+  width: min(100%, 900px);
+  min-height: 690px;
   border: 1px solid rgba(245, 236, 216, 0.14);
-  border-radius: 34px;
+  border-radius: 40px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255, 77, 36, 0.16), transparent 18rem),
-    radial-gradient(circle at 80% 70%, rgba(169, 217, 208, 0.1), transparent 18rem),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    rgba(3, 5, 5, 0.72);
-  backdrop-filter: blur(24px);
+    radial-gradient(circle at 22% 18%, rgba(255, 77, 36, 0.16), transparent 24rem),
+    radial-gradient(circle at 78% 76%, rgba(169, 217, 208, 0.1), transparent 25rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(3, 5, 5, 0.76);
+  backdrop-filter: blur(26px);
   box-shadow:
-    0 50px 120px rgba(0, 0, 0, 0.55),
-    inset 0 0 80px rgba(255, 255, 255, 0.04);
+    0 60px 140px rgba(0, 0, 0, 0.58),
+    inset 0 0 90px rgba(255, 255, 255, 0.04);
   overflow: hidden;
 }
 
@@ -281,198 +285,180 @@ h1 span {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(245, 236, 216, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 236, 216, 0.045) 1px, transparent 1px);
-  background-size: 42px 42px;
-  opacity: 0.28;
+    linear-gradient(rgba(245, 236, 216, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 236, 216, 0.038) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.32;
+}
+
+.riskBoard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 77, 36, 0.09), transparent 42%),
+    radial-gradient(circle at 54% 58%, rgba(255, 77, 36, 0.12), transparent 19rem);
+  pointer-events: none;
 }
 
 .boardTop {
   position: absolute;
-  top: 22px;
-  left: 24px;
+  top: 30px;
+  left: 34px;
   display: flex;
-  gap: 7px;
-  z-index: 4;
+  gap: 10px;
+  z-index: 6;
 }
 
 .boardTop span,
 .frameDots span {
-  width: 9px;
-  height: 9px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: rgba(245, 236, 216, 0.44);
 }
 
-.boardBadge {
-  position: absolute;
-  top: 24px;
-  right: 26px;
-  z-index: 4;
-  color: var(--muted);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-}
-
 .roadNetwork {
   position: absolute;
-  inset: 110px 70px 170px;
-  z-index: 3;
+  inset: 115px 44px 132px;
+  z-index: 5;
 }
 
 .roadLine {
   position: absolute;
-  background: rgba(245, 236, 216, 0.5);
+  height: 25px;
   border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(245, 236, 216, 0.72), rgba(185, 180, 163, 0.66));
   box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.35),
-    0 0 26px rgba(255, 77, 36, 0.08);
+    0 0 0 1px rgba(0, 0, 0, 0.46),
+    0 20px 45px rgba(0, 0, 0, 0.38),
+    0 0 36px rgba(255, 77, 36, 0.08);
 }
 
 .roadLine::before {
   content: "";
   position: absolute;
-  left: 6%;
-  right: 6%;
+  left: 7%;
+  right: 7%;
   top: 50%;
-  height: 1px;
+  height: 2px;
   transform: translateY(-50%);
   background: repeating-linear-gradient(
     90deg,
-    rgba(8, 8, 7, 0.72) 0 14px,
-    transparent 14px 30px
+    rgba(8, 8, 7, 0.64) 0 20px,
+    transparent 20px 46px
   );
+  opacity: 0.72;
 }
 
 .roadA {
-  width: 68%;
-  height: 25px;
-  left: 31%;
-  top: 56%;
-  transform: rotate(-20deg);
+  width: 76%;
+  left: 10%;
+  top: 50%;
+  transform: rotate(-18deg);
 }
 
 .roadB {
   width: 52%;
-  height: 20px;
-  left: 28%;
-  top: 68%;
+  left: 20%;
+  top: 59%;
   transform: rotate(31deg);
 }
 
 .roadC {
-  width: 50%;
-  height: 20px;
-  left: 55%;
-  top: 68%;
-  transform: rotate(-46deg);
+  width: 54%;
+  left: 46%;
+  top: 61%;
+  transform: rotate(-47deg);
 }
 
-.dangerPin {
+.roadD {
+  width: 44%;
+  left: 37%;
+  top: 37%;
+  transform: rotate(38deg);
+  opacity: 0.86;
+}
+
+.hotspotGlow {
   position: absolute;
-  display: grid;
-  place-items: center;
+  display: block;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.04) 18%, transparent 38%),
-    radial-gradient(circle, rgba(255, 77, 36, 0.95), rgba(255, 77, 36, 0.26) 48%, rgba(255, 77, 36, 0.02) 72%);
-  border: 1px solid rgba(255, 77, 36, 0.55);
+    radial-gradient(circle, rgba(255, 245, 225, 0.78) 0 7%, rgba(255, 77, 36, 0.78) 13%, rgba(255, 77, 36, 0.18) 44%, transparent 72%);
+  border: 1px solid rgba(255, 77, 36, 0.45);
   box-shadow:
-    0 0 0 10px rgba(255, 77, 36, 0.08),
-    0 18px 34px rgba(0, 0, 0, 0.32),
-    inset -12px -18px 30px rgba(0, 0, 0, 0.3);
+    0 0 34px rgba(255, 77, 36, 0.45),
+    0 0 90px rgba(255, 77, 36, 0.16);
 }
 
-.dangerPin b {
-  color: var(--cream);
-  font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 1;
-}
-
-.pinOne {
-  width: 78px;
-  height: 78px;
+.glowOne {
+  width: 138px;
+  height: 138px;
   left: 50%;
-  top: 40%;
+  top: 46%;
   transform: translate(-50%, -50%);
 }
 
-.pinOne b {
-  font-size: 2.3rem;
-}
-
-.pinTwo {
-  width: 60px;
-  height: 60px;
-  left: 34%;
-  top: 52%;
+.glowTwo {
+  width: 96px;
+  height: 96px;
+  left: 31%;
+  top: 57%;
   transform: translate(-50%, -50%);
 }
 
-.pinTwo b {
-  font-size: 1.9rem;
-}
-
-.pinThree {
-  width: 60px;
-  height: 60px;
-  left: 68%;
+.glowThree {
+  width: 94px;
+  height: 94px;
+  left: 69%;
   top: 67%;
   transform: translate(-50%, -50%);
 }
 
-.pinThree b {
-  font-size: 1.9rem;
-}
-
-.pinFour {
-  width: 48px;
-  height: 48px;
+.glowFour {
+  width: 68px;
+  height: 68px;
   left: 44%;
   top: 75%;
   transform: translate(-50%, -50%);
 }
 
-.pinFour b {
-  font-size: 1.5rem;
-}
-
-.riskReadout {
+.boardStats {
   position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
-  z-index: 4;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  z-index: 7;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 14px;
 }
 
-.riskReadout div {
-  min-height: 86px;
+.boardStats div {
+  min-height: 96px;
   border: 1px solid rgba(245, 236, 216, 0.12);
-  border-radius: 22px;
-  padding: 14px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
 }
 
-.riskReadout span {
+.boardStats span {
   display: block;
   color: var(--muted);
-  font-size: 0.74rem;
-  margin-bottom: 8px;
+  font-size: 0.78rem;
+  margin-bottom: 10px;
 }
 
-.riskReadout strong {
+.boardStats strong {
   display: block;
   color: var(--cream);
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.2vw, 2.8rem);
+  font-size: clamp(1.8rem, 2.6vw, 3.4rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.06em;
   line-height: 1;
 }
 
@@ -629,6 +615,11 @@ input[type="range"] {
 .frameDots {
   display: flex;
   gap: 7px;
+}
+
+.frameDots span {
+  width: 9px;
+  height: 9px;
 }
 
 .mapCanvas {
@@ -800,11 +791,12 @@ input[type="range"] {
   }
 
   .heroArtwork {
-    min-height: 520px;
+    min-height: 660px;
   }
 
   .riskBoard {
-    max-width: 620px;
+    width: min(100%, 780px);
+    min-height: 620px;
   }
 }
 
@@ -829,7 +821,7 @@ input[type="range"] {
 
   .dataLedger,
   .metricsStrip,
-  .riskReadout {
+  .boardStats {
     grid-template-columns: 1fr;
   }
 
@@ -842,6 +834,27 @@ input[type="range"] {
     border-bottom: 0;
   }
 
+  .heroArtwork {
+    min-height: 620px;
+  }
+
+  .riskBoard {
+    min-height: 600px;
+    border-radius: 30px;
+  }
+
+  .roadNetwork {
+    inset: 130px 25px 185px;
+  }
+
+  .roadLine {
+    height: 18px;
+  }
+
+  .boardStats div {
+    min-height: auto;
+  }
+
   .mapCanvas {
     height: 590px;
   }
@@ -850,14 +863,5 @@ input[type="range"] {
     align-items: flex-start;
     gap: 20px;
     flex-direction: column;
-  }
-
-  .roadNetwork {
-    inset: 96px 34px 210px;
-  }
-
-  .riskBoard {
-    min-height: 620px;
-    aspect-ratio: auto;
   }
 }
