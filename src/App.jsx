@@ -299,28 +299,12 @@ export default function App() {
               <span />
             </div>
 
-            <div className="boardBadge">Bangkok Metro</div>
-
             <div className="roadNetwork">
               <div className="roadLine roadA" />
               <div className="roadLine roadB" />
               <div className="roadLine roadC" />
 
-              <span className="dangerPin pinOne">
-                <b>1</b>
-              </span>
-
-              <span className="dangerPin pinTwo">
-                <b>2</b>
-              </span>
-
-              <span className="dangerPin pinThree">
-                <b>3</b>
-              </span>
-
-              <span className="dangerPin pinFour">
-                <b>4</b>
-              </span>
+              
             </div>
 
             <div className="riskReadout">
