@@ -19,9 +19,9 @@
 body {
   color: var(--cream);
   background:
-    radial-gradient(circle at 8% 10%, rgba(255, 77, 36, 0.2), transparent 28rem),
-    radial-gradient(circle at 88% 18%, rgba(169, 217, 208, 0.13), transparent 28rem),
-    radial-gradient(circle at 50% 100%, rgba(255, 183, 95, 0.1), transparent 35rem),
+    radial-gradient(circle at 8% 10%, rgba(255, 77, 36, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 18%, rgba(169, 217, 208, 0.1), transparent 28rem),
+    radial-gradient(circle at 50% 100%, rgba(255, 183, 95, 0.08), transparent 35rem),
     var(--ink);
   font-family: var(--font-body);
   overflow-x: hidden;
@@ -48,11 +48,11 @@ a {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.17;
+  opacity: 0.14;
   mix-blend-mode: soft-light;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 46px 46px;
   mask-image: radial-gradient(circle, black, transparent 84%);
   z-index: 0;
@@ -93,6 +93,7 @@ a {
   color: var(--orange);
   background: rgba(255, 255, 255, 0.045);
   box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.05);
+  text-transform: lowercase;
 }
 
 .brandCluster strong {
@@ -215,12 +216,13 @@ h1 span {
   background: rgba(245, 236, 216, 0.08);
 }
 
-.button.ghost {
-  .button.notebook {
+.button.notebook {
   color: var(--ink);
   background: var(--mint);
   border-color: var(--mint);
 }
+
+.button.ghost {
   color: var(--cream);
   background: transparent;
   border-style: dashed;
@@ -258,16 +260,17 @@ h1 span {
   min-height: 640px;
 }
 
-.glassMonitor {
+.riskBoard {
   position: relative;
   width: min(100%, 720px);
   aspect-ratio: 1.08 / 1;
   border: 1px solid rgba(245, 236, 216, 0.14);
   border-radius: 34px;
   background:
-    linear-gradient(145deg, rgba(245, 236, 216, 0.13), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)),
-    rgba(3, 5, 5, 0.62);
+    radial-gradient(circle at 20% 20%, rgba(255, 77, 36, 0.18), transparent 20rem),
+    radial-gradient(circle at 80% 70%, rgba(169, 217, 208, 0.12), transparent 20rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(3, 5, 5, 0.7);
   backdrop-filter: blur(24px);
   box-shadow:
     0 50px 120px rgba(0, 0, 0, 0.55),
@@ -275,26 +278,41 @@ h1 span {
   overflow: hidden;
 }
 
-.glassMonitor::before {
+.riskBoard::before {
   content: "";
   position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255, 77, 36, 0.25), transparent 17rem),
-    radial-gradient(circle at 70% 65%, rgba(169, 217, 208, 0.21), transparent 17rem);
-  filter: blur(12px);
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 236, 216, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 236, 216, 0.05) 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: 0.32;
 }
 
-.monitorTop {
+.riskBoard::after {
+  content: "BANGKOK ROAD SAFETY BLACKSPOT INDEX";
+  position: absolute;
+  left: 38px;
+  bottom: 46px;
+  max-width: 620px;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 5.8vw, 6rem);
+  line-height: 0.82;
+  letter-spacing: -0.07em;
+  color: rgba(245, 236, 216, 0.08);
+  z-index: 1;
+}
+
+.boardTop {
   position: absolute;
   top: 22px;
   left: 24px;
   display: flex;
   gap: 7px;
-  z-index: 2;
+  z-index: 4;
 }
 
-.monitorTop span,
+.boardTop span,
 .frameDots span {
   width: 9px;
   height: 9px;
@@ -302,153 +320,206 @@ h1 span {
   background: rgba(245, 236, 216, 0.44);
 }
 
-.blurHeadline {
+.boardTitle {
   position: absolute;
-  inset: auto 32px 48px;
-  z-index: 1;
-  font-family: var(--font-display);
-  font-size: clamp(3.2rem, 6vw, 6.4rem);
-  line-height: 0.82;
-  letter-spacing: -0.07em;
-  color: rgba(245, 236, 216, 0.095);
-  filter: blur(1.2px);
+  top: 24px;
+  right: 26px;
+  z-index: 4;
+  text-align: right;
 }
 
-.orbCluster {
+.boardTitle p {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.boardTitle strong {
+  color: var(--cream);
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+}
+
+.roadNetwork {
   position: absolute;
-  inset: 0;
+  inset: 92px 60px 130px;
   z-index: 3;
 }
 
-.orb {
+.roadLine {
   position: absolute;
-  display: block;
-  border-radius: 50%;
-  border: 1px solid rgba(245, 236, 216, 0.22);
-  background:
-    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.08) 18%, transparent 43%),
-    radial-gradient(circle at 70% 70%, rgba(255, 77, 36, 0.8), rgba(255, 183, 95, 0.3) 28%, rgba(169, 217, 208, 0.2) 62%, rgba(255, 255, 255, 0.04));
+  background: rgba(245, 236, 216, 0.36);
   box-shadow:
-    inset -18px -22px 48px rgba(0, 0, 0, 0.48),
-    0 20px 44px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(4px);
-  animation: floatOrb 7s ease-in-out infinite;
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 0 34px rgba(255, 77, 36, 0.13);
 }
 
-.orbOne {
-  width: 148px;
-  height: 148px;
-  left: 34%;
-  top: 24%;
-}
-
-.orbTwo {
-  width: 96px;
-  height: 96px;
-  left: 52%;
-  top: 19%;
-  animation-delay: -1s;
-}
-
-.orbThree {
-  width: 118px;
-  height: 118px;
-  left: 45%;
-  top: 42%;
-  animation-delay: -2s;
-}
-
-.orbFour {
-  width: 74px;
-  height: 74px;
-  left: 29%;
-  top: 46%;
-  animation-delay: -3s;
-}
-
-.orbFive {
-  width: 88px;
-  height: 88px;
-  left: 62%;
-  top: 43%;
-  animation-delay: -1.6s;
-}
-
-.orbSix {
-  width: 64px;
-  height: 64px;
-  left: 38%;
-  top: 12%;
-  animation-delay: -2.7s;
-}
-
-.orbSeven {
-  width: 58px;
-  height: 58px;
-  left: 56%;
-  top: 56%;
-  animation-delay: -3.5s;
-}
-
-.orbEight {
-  width: 46px;
-  height: 46px;
-  left: 25%;
-  top: 32%;
-  animation-delay: -4.5s;
-}
-
-@keyframes floatOrb {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  50% {
-    transform: translate3d(8px, -15px, 0) scale(1.03);
-  }
-}
-
-.liveChip {
-  position: absolute;
-  z-index: 5;
-  left: 28px;
-  bottom: 26px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--cream);
-  padding: 11px 14px;
-  border: 1px solid var(--line);
+.mainRoad {
+  width: 72%;
+  height: 16px;
+  left: 9%;
+  top: 47%;
+  transform: rotate(-18deg);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.36);
-  backdrop-filter: blur(18px);
-  font-size: 0.88rem;
 }
 
-.pulse {
-  width: 9px;
-  height: 9px;
-  background: var(--orange);
+.mainRoad::before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 50%;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(8, 8, 7, 0.7) 0 16px,
+    transparent 16px 32px
+  );
+}
+
+.branchOne {
+  width: 42%;
+  height: 12px;
+  left: 38%;
+  top: 33%;
+  transform: rotate(35deg);
+  border-radius: 999px;
+}
+
+.branchTwo {
+  width: 38%;
+  height: 12px;
+  left: 18%;
+  top: 63%;
+  transform: rotate(28deg);
+  border-radius: 999px;
+}
+
+.branchThree {
+  width: 34%;
+  height: 12px;
+  left: 55%;
+  top: 62%;
+  transform: rotate(-45deg);
+  border-radius: 999px;
+}
+
+.dangerPin {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(255, 77, 36, 0.9);
-  animation: pulseDot 1.8s infinite;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.04) 20%, transparent 42%),
+    radial-gradient(circle, rgba(255, 77, 36, 0.95), rgba(255, 77, 36, 0.22) 48%, rgba(255, 77, 36, 0.02) 70%);
+  border: 1px solid rgba(255, 77, 36, 0.55);
+  box-shadow:
+    0 0 0 10px rgba(255, 77, 36, 0.08),
+    0 22px 40px rgba(0, 0, 0, 0.35),
+    inset -12px -18px 30px rgba(0, 0, 0, 0.32);
 }
 
-@keyframes pulseDot {
-  70% {
-    box-shadow: 0 0 0 12px rgba(255, 77, 36, 0);
-  }
+.dangerPin b {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+}
 
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 77, 36, 0);
-  }
+.pinOne {
+  left: 53%;
+  top: 39%;
+}
+
+.pinTwo {
+  left: 28%;
+  top: 48%;
+  width: 56px;
+  height: 56px;
+}
+
+.pinThree {
+  left: 67%;
+  top: 58%;
+  width: 62px;
+  height: 62px;
+}
+
+.pinFour {
+  left: 44%;
+  top: 67%;
+  width: 48px;
+  height: 48px;
+}
+
+.routeLabel {
+  position: absolute;
+  color: rgba(245, 236, 216, 0.58);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.labelOne {
+  left: 7%;
+  top: 20%;
+}
+
+.labelTwo {
+  right: 7%;
+  top: 38%;
+}
+
+.labelThree {
+  left: 15%;
+  bottom: 5%;
+}
+
+.riskReadout {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 0.75fr 1.35fr 0.9fr;
+  gap: 10px;
+}
+
+.riskReadout div {
+  min-height: 86px;
+  border: 1px solid rgba(245, 236, 216, 0.12);
+  border-radius: 22px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+}
+
+.riskReadout span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.74rem;
+  margin-bottom: 8px;
+}
+
+.riskReadout strong {
+  display: block;
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .floatingCard {
   position: absolute;
   z-index: 6;
-  width: 180px;
+  width: 185px;
   padding: 17px;
   border: 1px solid var(--line);
   border-radius: 22px;
@@ -466,14 +537,14 @@ h1 span {
 
 .floatingCard strong {
   font-family: var(--font-display);
-  font-size: 3rem;
+  font-size: 2.7rem;
   font-weight: 400;
   letter-spacing: -0.06em;
 }
 
 .floatingCard.hot {
   right: 0;
-  top: 18%;
+  top: 16%;
 }
 
 .floatingCard.cold {
@@ -808,7 +879,7 @@ input[type="range"] {
     min-height: 520px;
   }
 
-  .glassMonitor {
+  .riskBoard {
     max-width: 620px;
   }
 
@@ -841,7 +912,8 @@ input[type="range"] {
   }
 
   .dataLedger,
-  .metricsStrip {
+  .metricsStrip,
+  .riskReadout {
     grid-template-columns: 1fr;
   }
 
@@ -866,5 +938,14 @@ input[type="range"] {
 
   .floatingCard {
     width: 150px;
+  }
+
+  .roadNetwork {
+    inset: 88px 34px 210px;
+  }
+
+  .riskBoard {
+    min-height: 620px;
+    aspect-ratio: auto;
   }
 }

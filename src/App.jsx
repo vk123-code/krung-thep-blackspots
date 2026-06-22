@@ -5,13 +5,42 @@ import "./App.css";
 
 const DEFAULT_CENTER = [13.7563, 100.5018];
 
-// Replace this with your real Colab share link.
-// Example: "https://colab.research.google.com/drive/..."
 const COLAB_NOTEBOOK_URL = "https://colab.research.google.com/drive/1DUnQDASFlP2aQ_uugP9AC0HETku7akdX?usp=sharing";
+
+const LOCATION_ALIASES = {
+  กรุงเทพมหานคร: ["Bangkok", "Krung Thep", "Bangkok Metropolis", "BKK"],
+  กทม: ["Bangkok", "Krung Thep", "Bangkok Metropolis", "BKK"],
+  นนทบุรี: ["Nonthaburi"],
+  ปทุมธานี: ["Pathum Thani"],
+  สมุทรปราการ: ["Samut Prakan", "Samutprakarn"],
+};
 
 function fmt(value) {
   if (value === null || value === undefined || value === "") return "Unknown";
   return value;
+}
+
+function aliasesFor(value) {
+  const clean = String(fmt(value)).trim();
+  return LOCATION_ALIASES[clean] || [];
+}
+
+function englishLabel(value) {
+  const aliases = aliasesFor(value);
+  return aliases.length ? aliases[0] : "";
+}
+
+function bilingualLabel(value) {
+  const clean = fmt(value);
+  const english = englishLabel(clean);
+
+  if (!english) return clean;
+  return `${english} (${clean})`;
+}
+
+function searchableText(value) {
+  const clean = fmt(value);
+  return [clean, ...aliasesFor(clean)].join(" ");
 }
 
 function scoreLabel(score) {
@@ -110,7 +139,15 @@ export default function App() {
       .filter((feature) => {
         const p = feature.properties;
 
-        const text = `${p.road} ${p.province} ${p.district} ${p.cause} ${p.weather}`.toLowerCase();
+        const text = [
+          searchableText(p.road),
+          searchableText(p.province),
+          searchableText(p.district),
+          searchableText(p.cause),
+          searchableText(p.weather),
+        ]
+          .join(" ")
+          .toLowerCase();
 
         const matchesSearch = q ? text.includes(q) : true;
         const matchesHotspot = hotspotsOnly ? p.is_hotspot : true;
@@ -126,7 +163,10 @@ export default function App() {
 
     if (!q) return null;
 
-    return scores.find((item) => item.area_name?.toLowerCase().includes(q));
+    return scores.find((item) => {
+      const text = searchableText(item.area_name).toLowerCase();
+      return text.includes(q);
+    });
   }, [scores, scoreSearch]);
 
   function handleUpload(event) {
@@ -169,6 +209,7 @@ export default function App() {
   ).length;
 
   const topHotspot = hotspots[0];
+  const topHotspotRoad = topHotspot?.top_road ? fmt(topHotspot.top_road) : "Awaiting model";
 
   return (
     <main className="siteShell">
@@ -176,7 +217,7 @@ export default function App() {
 
       <nav className="topNav">
         <div className="brandCluster">
-          <div className="brandGlyph">กท</div>
+          <div className="brandGlyph">bk</div>
 
           <div>
             <strong>Krung Thep Blackspots</strong>
@@ -204,7 +245,7 @@ export default function App() {
 
           <h1>
             Road risk,
-            <span> mapped with street-level memory.</span>
+            <span> mapped by blackspots.</span>
           </h1>
 
           <p className="heroText">
@@ -249,49 +290,78 @@ export default function App() {
             </div>
 
             <div>
-              <span>Output</span>
-              <strong>GeoJSON</strong>
+              <span>Search</span>
+              <strong>Thai + English</strong>
             </div>
           </div>
         </div>
 
-        <div className="heroArtwork" aria-label="Decorative data cluster">
-          <div className="glassMonitor">
-            <div className="monitorTop">
+        <div className="heroArtwork" aria-label="Road accident hotspot board">
+          <div className="riskBoard">
+            <div className="boardTop">
               <span />
               <span />
               <span />
             </div>
 
-            <div className="blurHeadline">
-              BANGKOK ROAD SAFETY BLACKSPOT INDEX
+            <div className="boardTitle">
+              <p>Bangkok Metro</p>
+              <strong>BLACKSPOT FIELD</strong>
             </div>
 
-            <div className="orbCluster">
-              <span className="orb orbOne" />
-              <span className="orb orbTwo" />
-              <span className="orb orbThree" />
-              <span className="orb orbFour" />
-              <span className="orb orbFive" />
-              <span className="orb orbSix" />
-              <span className="orb orbSeven" />
-              <span className="orb orbEight" />
+            <div className="roadNetwork">
+              <div className="roadLine mainRoad" />
+              <div className="roadLine branchOne" />
+              <div className="roadLine branchTwo" />
+              <div className="roadLine branchThree" />
+
+              <span className="dangerPin pinOne">
+                <b>1</b>
+              </span>
+
+              <span className="dangerPin pinTwo">
+                <b>2</b>
+              </span>
+
+              <span className="dangerPin pinThree">
+                <b>3</b>
+              </span>
+
+              <span className="dangerPin pinFour">
+                <b>4</b>
+              </span>
+
+              <span className="routeLabel labelOne">cluster density</span>
+              <span className="routeLabel labelTwo">severity index</span>
+              <span className="routeLabel labelThree">commute exposure</span>
             </div>
 
-            <div className="liveChip">
-              <span className="pulse" />
-              Live map layer
+            <div className="riskReadout">
+              <div>
+                <span>Highest cluster</span>
+                <strong>{topHotspot ? `#${topHotspot.rank}` : "..."}</strong>
+              </div>
+
+              <div>
+                <span>Top road</span>
+                <strong>{topHotspotRoad}</strong>
+              </div>
+
+              <div>
+                <span>Detected hotspots</span>
+                <strong>{hotspotCount.toLocaleString()}</strong>
+              </div>
             </div>
           </div>
 
           <div className="floatingCard hot">
-            <span>Highest cluster</span>
-            <strong>{topHotspot ? `#${topHotspot.rank}` : "Loading"}</strong>
+            <span>Mapped records</span>
+            <strong>{totalAccidents.toLocaleString()}</strong>
           </div>
 
           <div className="floatingCard cold">
-            <span>Mapped records</span>
-            <strong>{totalAccidents.toLocaleString()}</strong>
+            <span>Model layer</span>
+            <strong>DBSCAN</strong>
           </div>
         </div>
       </section>
@@ -337,7 +407,7 @@ export default function App() {
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Try: พระราม, ฝน, นนทบุรี"
+            placeholder="Try: Bangkok, Nonthaburi, Pathum Thani, ฝน"
           />
         </div>
 
@@ -428,7 +498,9 @@ export default function App() {
                   <Popup>
                     <strong>{fmt(p.road)}</strong>
                     <br />
-                    Province: {fmt(p.province)}
+                    Province: {bilingualLabel(p.province)}
+                    <br />
+                    District/Road area: {bilingualLabel(p.district)}
                     <br />
                     Date: {fmt(p.date)} at {fmt(p.time)}
                     <br />
@@ -450,25 +522,25 @@ export default function App() {
           </MapContainer>
 
           <div className="mapCaption">
-            Showing {filteredFeatures.length.toLocaleString()} visible points. Filtered for speed
-            so the map still feels smooth.
+            Showing {filteredFeatures.length.toLocaleString()} visible points. Search works
+            with Thai and English province names.
           </div>
         </div>
 
         <aside className="sideDeck" id="scores">
           <section className="scorePanel">
             <p className="miniLabel">Commute safety score</p>
-            <h2>Search a road or district.</h2>
+            <h2>Search a road, district, or province.</h2>
 
             <input
               value={scoreSearch}
               onChange={(event) => setScoreSearch(event.target.value)}
-              placeholder="Type a road name from the map"
+              placeholder="Try: Bangkok or a road name from the map"
             />
 
             {scoreResult ? (
               <div className="scoreCard">
-                <span>{scoreResult.area_name}</span>
+                <span>{bilingualLabel(scoreResult.area_name)}</span>
 
                 <strong>{scoreResult.safety_score}</strong>
 
@@ -514,6 +586,7 @@ export default function App() {
             <ul>
               <li>Google Colab data science notebook</li>
               <li>Python cleaning pipeline</li>
+              <li>Thai + English location search</li>
               <li>Severity-weighted risk index</li>
               <li>DBSCAN hotspot clustering</li>
               <li>React Leaflet map interface</li>
